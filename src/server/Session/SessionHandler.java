@@ -1,15 +1,11 @@
 package server.Session;
 
 import javax.swing.*;
-
-import server.Constants.CheckersConstants;
-import server.Model.Game;
-import server.Model.Player;
-import server.Model.Board;
-
 import java.io.*;
 import java.net.*;
 import java.awt.*;
+import server.Constants.CheckersConstants;
+import server.Model.*;
 
 public class SessionHandler implements Runnable {
 
@@ -18,17 +14,16 @@ public class SessionHandler implements Runnable {
     private Player player2;
 
     private boolean continueToPlay = true;
-/*
+
     //Construct thread
     public SessionHandler(Socket p1, Socket p2){
-        player1 = new Player(CheckersConstants.PLAYER_ONE.getValue(), p1);
-        player2 = new Player(CheckersConstants.PLAYER_TWO.getValue(), p2);
+        player1 = new Player(server.Constants.CheckersConstants.PLAYER_ONE.getValue(), p1);
+        player2 = new Player(server.Constants.CheckersConstants.PLAYER_TWO.getValue(), p2);
 
         CheckersConstants = new Game();
     }
-*/
+
     public void run() {
-/*
         //Send Data back and forth
         try{
             //notify Player 1 to start
@@ -43,14 +38,14 @@ public class SessionHandler implements Runnable {
 
                 //Send Data back to 2nd Player
                 if(CheckersConstants.isOver())
-                    player2.sendData(CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+                    player2.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
                 int fromStatus = player2.sendData(from);
                 int toStatus = player2.sendData(to);
                 checkStatus(fromStatus,toStatus);
 
                 //IF game is over, break
                 if(CheckersConstants.isOver()){
-                    player1.sendData(CheckersConstants.YOU_WIN.getValue());
+                    player1.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
                     continueToPlay=false;
                     break;
                 }
@@ -65,7 +60,7 @@ public class SessionHandler implements Runnable {
 
                 //Send Data back to 1st Player
                 if(CheckersConstants.isOver()){
-                    player1.sendData(CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+                    player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
                 }
                 fromStatus = player1.sendData(from);
                 toStatus = player1.sendData(to);
@@ -73,7 +68,7 @@ public class SessionHandler implements Runnable {
 
                 //IF game is over, break
                 if(CheckersConstants.isOver()){
-                    player2.sendData(CheckersConstants.YOU_WIN.getValue());
+                    player2.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
                     continueToPlay=false;
                     break;
                 }
@@ -93,7 +88,6 @@ public class SessionHandler implements Runnable {
 
             return;
         }
- */
     }
 
     private void checkStatus(int status, int status2) throws Exception{
@@ -101,12 +95,12 @@ public class SessionHandler implements Runnable {
             throw new Exception("Connection is lost");
         }
     }
-/*
+
     private void updateGameModel(int from, int to){
         Board fromSquare = CheckersConstants.getSquare(from);
         Board toSquare = CheckersConstants.getSquare(to);
         toSquare.setPlayerID(fromSquare.getPlayerID());
-        fromSquare.setPlayerID(CheckersConstants.EMPTY_SQUARE.getValue());
+        fromSquare.setPlayerID(server.Constants.CheckersConstants.EMPTY_SQUARE.getValue());
 
         checkCrossJump(fromSquare, toSquare);
     }
@@ -117,8 +111,7 @@ public class SessionHandler implements Runnable {
             int middleCol = (from.getSquareCol() + to.getSquareCol())/2;
 
             Board middleSquare = CheckersConstants.getSquare((middleRow*8)+middleCol+1);
-            middleSquare.setPlayerID(CheckersConstants.EMPTY_SQUARE.getValue());
+            middleSquare.setPlayerID(server.Constants.CheckersConstants.EMPTY_SQUARE.getValue());
         }
     }
-    */
 }

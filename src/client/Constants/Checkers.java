@@ -1,6 +1,6 @@
-package server.Constants;
+package client.Constants;
 
-public enum CheckersConstants {
+public enum Checkers {
 
     NUM_ROWS(8),
     NUM_COLS(8),
@@ -16,17 +16,11 @@ public enum CheckersConstants {
 
     private int value;
 
-    private CheckersConstants(int value) {
+    private Checkers(int value) {
         this.value = value;
     }
 
     public int getValue(){
         return this.value;
     }
-
-
-	  public static int PLAYER1_WON = 1; // Indicate player 1 won
-	  public static int PLAYER2_WON = 2; // Indicate player 2 won
-	  public static int DRAW = 3; // Indicate a draw
-	  public static int CONTINUE = 4; // Indicate to continue
 }
