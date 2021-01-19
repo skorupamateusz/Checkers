@@ -82,7 +82,7 @@ public class Controller implements Runnable {
                     "Error", JOptionPane.ERROR_MESSAGE, null);
         }
     }
-
+//todo zrobić tu funkcje wyświetlania panelu po zakeńczeniu gry
     private void receiveInfoFromServer() throws IOException {
         player.setMyTurn(false);
         int from = fromServer.readInt();

@@ -57,7 +57,7 @@ public class SessionHandler implements Runnable {
                 to = player2.receiveData();
                 checkStatus(from, to);
                 updateGameModel(from, to);
-
+                    //todo tu jest zakończenie gry dla obu graczy
                 //Send Data back to 1st Player
                 if(CheckersConstants.isOver()){
                     player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
