@@ -72,7 +72,8 @@ public class DBManager {
             data.addElement(tablecontent);
             i++;
         }
-
+        rs.close();
+        query.close();
         return data;
     }
 }
