@@ -51,6 +51,11 @@ public class DBManager {
         else return false;
     }
 
+    /**
+     *
+     * @return vector z rankigiem z bd który jest wymaganym parametrem do przekazania w JTabel
+     * @throws SQLException
+     */
     public Vector<Vector> fill() throws SQLException{
         String statemnt = "SELECT * FROM USER ORDER BY points DESC";
         Statement query = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -58,11 +63,14 @@ public class DBManager {
 
         Vector<Vector> data = new Vector<>();
         ResultSet rs = query.executeQuery(statemnt);
+        int i =1;
         while ((rs.next())){
             Vector<String> tablecontent = new Vector<>();
+            tablecontent.addElement(String.valueOf(i));
             tablecontent.addElement(rs.getString(2));
             tablecontent.addElement(rs.getString(4));
             data.addElement(tablecontent);
+            i++;
         }
 
         return data;
