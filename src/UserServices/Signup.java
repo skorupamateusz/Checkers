@@ -7,7 +7,7 @@ import java.awt.*;
 import java.net.URL;
 import java.sql.SQLException;
 
-public class Signup extends JFrame {
+public class Signup extends JPanel {
 
     private final TextField usernametf;
     private final JPasswordField password1;
@@ -32,12 +32,12 @@ public class Signup extends JFrame {
         registerB = new JButton();
         iconurl = new URL("https://static.thenounproject.com/png/3264269-200.png");
         iconimage = ImageIO.read(iconurl);
-        setIconImage(iconimage);
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
-        setTitle("Rejestracja");
+       // setIconImage(iconimage);
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        //setTitle("Rejestracja");
         setVisible(true);
-        setSize(400, 200);
-        setResizable(false);
+        this.setSize(400, 150);
+        //setResizable(false);
         login.setText("Podaj nazwę użytkownka");
         login.setVisible(true);
         password1Lab.setText("Podaj hasło");
@@ -75,7 +75,7 @@ public class Signup extends JFrame {
         });
         add(Box.createHorizontalGlue());
         add(login);add(usernametf); add(password1Lab);add(password1);add(password2Lab);add( password2);add(registerB);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      //  this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {

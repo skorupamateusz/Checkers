@@ -2,8 +2,6 @@ package UserServices;
 
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class DBManager {
@@ -21,6 +19,13 @@ public class DBManager {
             System.exit(1);
         }
     }
+
+    /**
+     * @param username
+     * @param password
+     * @return resultset mozna przepisac na obiekt i przekazyac obiekt zalogowanrgo graza miedzy widokami
+     * @throws SQLException
+     */
     public ResultSet addUser(String username, String password)throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement("INSERT INTO USER (username, password) VALUES (?, ?)");
@@ -52,7 +57,9 @@ public class DBManager {
     }
 
     /**
-     *
+     * //todo dodac przekaznie jako argument gracza by uzyskać jego pozycję w rankigu
+     * sprawdzac czy wartosc username albo id jedt niemu równa i dla iteracji
+     * oznaczajecej pozycje w rankingu przekazac ja na zewnatrz
      * @return vector z rankigiem z bd który jest wymaganym parametrem do przekazania w JTabel
      * @throws SQLException
      */
@@ -73,7 +80,22 @@ public class DBManager {
             i++;
         }
         rs.close();
-        query.close();
         return data;
     }
+
+    /**
+     * metoda aktualizauje wynik punktowy po wygraniu rozgrywki przez gracza
+     * @param id id gracza dla którego zmienia sie wysnik
+     * @param currentRes aktualy wybnik dla zalgowanego gracza znany z prsekazywanego miedzy widoki ResultSet
+     * @throws Exception
+     */
+    public void newResult(int id, int currentRes)throws Exception{
+        int restosave = currentRes+1;
+        PreparedStatement stm = connection.prepareStatement("UPDATE user SET points = ? where id = ?");
+        stm.setInt(1, restosave);
+        stm.setInt(2, id);
+        stm.executeUpdate();
+
+    }
+
 }
