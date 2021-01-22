@@ -12,8 +12,8 @@ public class Rank extends JPanel {
     private DBManager db;
     private JTable table;
     private Vector<String> columns;
-    private final URL iconurl;
-    private final Image iconimage;
+//    private final URL iconurl;
+//    private final Image iconimage;
     private JLabel label;
     private JPanel tabpanel = new JPanel();
     private final Color kolor = new Color(207, 72, 62);
