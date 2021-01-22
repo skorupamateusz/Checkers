@@ -35,8 +35,8 @@ public class Rank extends JPanel {
         jp2.setBackground(Color.gray);
         jp2.add(label2, BorderLayout.PAGE_END);
 
-        iconurl = new URL("https://image.shutterstock.com/image-vector/podium-icon-260nw-325772819.jpg");
-        iconimage = ImageIO.read(iconurl);
+//        iconurl = new URL("https://image.shutterstock.com/image-vector/podium-icon-260nw-325772819.jpg");
+//        iconimage = ImageIO.read(iconurl);
         //setIconImage(iconimage);
         db = new DBManager();
 
