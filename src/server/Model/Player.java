@@ -50,7 +50,7 @@ public class Player{
     public String receiveDataString() {
         String data = null;
         try {
-            data = this.fromPlayer.readLine();
+            data = this.fromPlayer.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
             return null;

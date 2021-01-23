@@ -107,7 +107,7 @@ public class Game {
         System.out.println("Player 2 has " + playerTwo);
     }
 
-    public boolean isOver() throws myException {
+    public boolean isOver()  {
 
         int playerOne = 0;
         int playerTwo = 0;
@@ -120,21 +120,33 @@ public class Game {
                     playerTwo++;
             }
         }
-
-        if (playerOne == 0) {
-
-            return true;
-        }
-        if(playerTwo == 0)
-        {
-            throw new myException();
-        }
-        /*
         if(playerOne==0 || playerTwo==0){
             return true;
         }
-         */
 
         return false;
+    }
+
+    public boolean isOverPlayer()throws myException {
+        int playerOne = 0;
+        int playerTwo = 0;
+        for(int r=0;r<CheckersConstants.NUM_ROWS.getValue();r++){
+            for(int c=0;c<CheckersConstants.NUM_COLS.getValue();c++){
+                if(board[r][c].getPlayerID()==1)
+                    playerOne++;
+
+                if(board[r][c].getPlayerID()==2)
+                    playerTwo++;
+            }
+        }
+
+        if(playerOne==0){
+            return true;
+        }
+        if(playerTwo ==0){
+            throw  new myException();
+        }
+
+        return  false;
     }
 }

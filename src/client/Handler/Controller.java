@@ -47,7 +47,7 @@ public class Controller implements Runnable {
         isOver=false;
 
         try {
-
+            toServer.writeUTF(player.getName());
             //Player One
             if(player.getPlayerID()==Checkers.PLAYER_ONE.getValue()){
                 //wait for the notification to start
