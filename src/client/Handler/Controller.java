@@ -3,14 +3,9 @@ package client.Handler;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import client.Constants.Checkers;
-import client.Login.Login;
-import client.Login.ConnectDB;
 import client.Model.Player;
 import client.Model.Square;
 import client.View.BoardPanel;
@@ -39,19 +34,6 @@ public class Controller implements Runnable {
 
         selectedSquares = new LinkedList<Square>();
         playableSquares = new LinkedList<Square>();
-    }
-
-    public void newResult(String username)throws Exception{
-        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM USERS WHERE USERNAME =?");
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery() ;
-        int result = rs.getInt(4);
-        result++;
-        PreparedStatement stm = ConnectDB.getConnection().prepareStatement("UPDATE USERS SET points = ? where username = ?");
-        stm.setInt(1, result);
-        stm.setString(2, username);
-        stm.executeUpdate();
-
     }
 
     public void setBoardPanel(BoardPanel panel){
@@ -114,7 +96,6 @@ public class Controller implements Runnable {
         }else if(from==Checkers.YOU_WIN.getValue()){
             isOver=true;
             continueToPlay=false;
-            newResult(player.getName());
         }else{
             int to = fromServer.readInt();
             updateReceivedInfo(from, to);

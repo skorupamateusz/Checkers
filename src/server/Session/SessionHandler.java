@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.awt.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import client.Login.ConnectDB;
 import server.Constants.CheckersConstants;
 import server.Model.*;
 
@@ -21,6 +25,19 @@ public class SessionHandler implements Runnable {
         player2 = new Player(server.Constants.CheckersConstants.PLAYER_TWO.getValue(), p2);
 
         CheckersConstants = new Game();
+    }
+
+    public void newResult(String username)throws Exception{
+        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM USERS WHERE USERNAME =?");
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery() ;
+        int result = rs.getInt(3);
+        result++;
+        PreparedStatement stm = ConnectDB.getConnection().prepareStatement("UPDATE USERS SET points = ? where username = ?");
+        stm.setInt(1, result);
+        stm.setString(2, username);
+        stm.executeUpdate();
+
     }
 
     public void run() {
@@ -59,19 +76,50 @@ public class SessionHandler implements Runnable {
                 updateGameModel(from, to);
                     //todo tu jest zakończenie gry dla obu graczy
                 //Send Data back to 1st Player
+                /*
                 if(CheckersConstants.isOver()){
+                    System.out.println("Wchodze w ifa YOU_LOSE");
                     player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+
+                    String pName = player2.receiveDataString();
+                    newResult(pName);
+                    System.out.println("Looser: " + pName);
                 }
+                 */
                 fromStatus = player1.sendData(from);
                 toStatus = player1.sendData(to);
                 checkStatus(fromStatus,toStatus);
 
+                try {
+                    if (CheckersConstants.isOver()) {
+                        System.out.println("try,catch - dwojka wygrywa");
+                        player2.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
+                        String pName = player2.receiveDataString();
+                        newResult(pName);
+                        System.out.println("Winner: " + pName);
+                    }
+                }
+                catch(Game.myException e)
+                {
+                    System.out.println("try,catch - jedynka wygrywa");
+                    player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+                    String pName = player1.receiveDataString();
+                    newResult(pName);
+                    System.out.println("Winner: " + pName);
+                }
+
                 //IF game is over, break
+                /*
                 if(CheckersConstants.isOver()){
+                    System.out.println("Wchodze w ifa YOU_WIN");
                     player2.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
+                    String pName = player2.receiveDataString();
+                    newResult(pName);
+                    System.out.println("Winner: " + pName);
                     continueToPlay=false;
                     break;
                 }
+                */
                 System.out.println("second break");
             }
 

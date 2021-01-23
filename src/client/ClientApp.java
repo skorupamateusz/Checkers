@@ -37,7 +37,8 @@ public class ClientApp extends JFrame {
             PropertyManager pm = PropertyManager.getInstance();
             address = pm.getAddress();
             port = pm.getPort();
-/*
+
+            /*
             String name = (String) JOptionPane.showInputDialog(null, "Enter your name to Connect", "Connect to Server",
                     JOptionPane.OK_CANCEL_OPTION);
 

@@ -12,6 +12,11 @@ public class Game {
         initializeSquares();
         assignPlayerIDs();
     }
+    public static class myException extends Exception {
+        public myException() {
+            super();
+        }
+    }
 
     //Initialize 64 board with ID, Row, Col & isFilled
     private void initializeSquares() {
@@ -102,7 +107,7 @@ public class Game {
         System.out.println("Player 2 has " + playerTwo);
     }
 
-    public boolean isOver(){
+    public boolean isOver() throws myException {
 
         int playerOne = 0;
         int playerTwo = 0;
@@ -116,9 +121,19 @@ public class Game {
             }
         }
 
+        if (playerOne == 0) {
+
+            return true;
+        }
+        if(playerTwo == 0)
+        {
+            throw new myException();
+        }
+        /*
         if(playerOne==0 || playerTwo==0){
             return true;
         }
+         */
 
         return false;
     }

@@ -47,6 +47,17 @@ public class Player{
         }
     }
 
+    public String receiveDataString() {
+        String data = null;
+        try {
+            data = this.fromPlayer.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    return data;
+    }
+
     public void closeConnection(){
         try {
             this.socket.close();
