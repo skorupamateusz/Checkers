@@ -37,32 +37,30 @@ public class ServerApp extends JFrame {
     public void startRunning(){
 
         try{
-
             PropertyManager pm = PropertyManager.getInstance();
             int port = pm.getPort();
 
             //Create a server socket
             serverSocket = new ServerSocket(port);
-            information.append(serverSocket.getInetAddress().getHostAddress());
-            information.append(new Date() + ":- Server start at port "+ port + " \n");
+            information.append(new Date() + "  -  Checkers Server started. \n\n");
             sessionNo = 1;
 
             while(true){
 
-                information.append(new Date()+ ":- Session "+ sessionNo + " is started\n");
+                information.append(new Date()+ "  -  Session "+ sessionNo + " is started.\n");
 
                 //Wait for player 1
                 Socket player1 = serverSocket.accept();
-                information.append(new Date() + ":- player1 joined at");
-                information.append(player1.getInetAddress().getHostAddress() + "\n");
+                information.append(new Date() + "  -  Player1 joined the Server. \n");
+                //information.append(player1.getInetAddress().getHostAddress() + "\n");
 
                 //Notification to player1 that's he's connected successfully
                 new DataOutputStream(player1.getOutputStream()).writeInt(CheckersConstants.PLAYER_ONE.getValue());
 
                 //Wait for player 2
                 Socket player2 = serverSocket.accept();
-                information.append(new Date() + ":- player2 joined at");
-                information.append(player2.getInetAddress().getHostAddress() +"\n");
+                information.append(new Date() + "  -  Player2 joined the Server. \n");
+                //information.append(player2.getInetAddress().getHostAddress() +"\n");
 
                 //Notification to player2 that's he's connected successfully
                 new DataOutputStream(player2.getOutputStream()).writeInt(CheckersConstants.PLAYER_TWO.getValue());

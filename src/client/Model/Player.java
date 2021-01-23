@@ -11,7 +11,6 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-
         setMyTurn(false);
     }
 
@@ -38,8 +37,5 @@ public class Player {
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
     }
-
-
-
 
 }

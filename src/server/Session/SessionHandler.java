@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.awt.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import client.Login.ConnectDB;
 import server.Constants.CheckersConstants;
 import server.Model.*;
 
@@ -23,11 +28,33 @@ public class SessionHandler implements Runnable {
         CheckersConstants = new Game();
     }
 
+    public void newResult(String username){
+        try{
+            PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM USERS WHERE USERNAME =?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery() ;
+            rs.next();
+            int result = rs.getInt(4);
+            result++;
+            PreparedStatement stm = ConnectDB.getConnection().prepareStatement("UPDATE USERS SET points = ? where username = ?");
+            stm.setInt(1, result);
+            stm.setString(2, username);
+            stm.executeUpdate();
+        }catch(Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     public void run() {
         //Send Data back and forth
         try{
             //notify Player 1 to start
             player1.sendData(1);
+
+            String pName = player1.receiveDataString();
+            String pName2 = player2.receiveDataString();
 
             while(continueToPlay){
                 //wait for player 1's Action
@@ -38,7 +65,7 @@ public class SessionHandler implements Runnable {
 
                 //Send Data back to 2nd Player
                 if(CheckersConstants.isOver())
-                    player2.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+                    player2.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());	//Game Over notification
                 int fromStatus = player2.sendData(from);
                 int toStatus = player2.sendData(to);
                 checkStatus(fromStatus,toStatus);
@@ -50,32 +77,50 @@ public class SessionHandler implements Runnable {
                     break;
                 }
 
-                System.out.println("after break");
+                System.out.println("Player 1 has moved.");
 
                 //wait for player 2's Action
                 from = player2.receiveData();
                 to = player2.receiveData();
                 checkStatus(from, to);
                 updateGameModel(from, to);
-
+                //todo tu jest zakończenie gry dla obu graczy
                 //Send Data back to 1st Player
+
                 if(CheckersConstants.isOver()){
                     player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
                 }
+
                 fromStatus = player1.sendData(from);
                 toStatus = player1.sendData(to);
                 checkStatus(fromStatus,toStatus);
 
+
                 //IF game is over, break
+
                 if(CheckersConstants.isOver()){
                     player2.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
                     continueToPlay=false;
                     break;
                 }
-                System.out.println("second break");
+
+                System.out.println("Player 2 has moved.");
             }
 
+            try {
+                if (CheckersConstants.isOverPlayer()) {
+                    //player2.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
+                    newResult(pName2);
+                    System.out.println("Winner: " + pName2 + ".");
 
+                }
+            }
+            catch(Game.myException e)
+            {
+                //player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+                newResult(pName);
+                System.out.println("Winner: " + pName + ".");
+            }
 
         }catch(Exception ex){
             System.out.println("Connection is being closed");

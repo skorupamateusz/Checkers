@@ -10,6 +10,7 @@ import client.Constants.*;
 import client.Handler.*;
 import client.Model.Player;
 import client.View.BoardPanel;
+import client.Login.Login;
 
 public class ClientApp extends JFrame {
 
@@ -37,6 +38,7 @@ public class ClientApp extends JFrame {
             address = pm.getAddress();
             port = pm.getPort();
 
+            /*
             String name = (String) JOptionPane.showInputDialog(null, "Enter your name to Connect", "Connect to Server",
                     JOptionPane.OK_CANCEL_OPTION);
 
@@ -48,6 +50,11 @@ public class ClientApp extends JFrame {
                         null);
                 System.exit(0);
             }
+            */
+
+            player = new Player(Login.username);
+            connect();
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Please enter valid IPv4-Address", "Error", JOptionPane.ERROR_MESSAGE,
                     null);

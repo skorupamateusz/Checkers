@@ -47,7 +47,7 @@ public class Controller implements Runnable {
         isOver=false;
 
         try {
-
+            toServer.writeUTF(player.getName());
             //Player One
             if(player.getPlayerID()==Checkers.PLAYER_ONE.getValue()){
                 //wait for the notification to start
@@ -80,10 +80,12 @@ public class Controller implements Runnable {
         } catch (InterruptedException e) {
             JOptionPane.showMessageDialog(null, "Connection interrupted",
                     "Error", JOptionPane.ERROR_MESSAGE, null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-    private void receiveInfoFromServer() throws IOException {
+//todo zrobić tu funkcje wyświetlania panelu po zakeńczeniu gry
+    private void receiveInfoFromServer() throws Exception {
         player.setMyTurn(false);
         int from = fromServer.readInt();
         if(from==Checkers.YOU_LOSE.getValue()){
