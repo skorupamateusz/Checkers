@@ -2,9 +2,6 @@ package server;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
-
-import client.Login.Login;
-import client.Model.Player;
 import server.Constants.CheckersConstants;
 import server.Session.SessionHandler;
 import java.io.*;
