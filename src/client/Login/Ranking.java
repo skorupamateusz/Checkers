@@ -7,11 +7,11 @@ import java.util.Vector;
 
 public class Ranking extends JFrame {
 
-    private ConnectDB db;
+    private final ConnectDB db;
     private JTable table;
-    private Vector<String> columns;
+    private final Vector<String> columns;
     private JLabel label;
-    private JPanel tabpanel = new JPanel();
+    private JPanel tabPanel = new JPanel();
     private JPanel mainPanel = new JPanel();
     private final Color kolor = new Color(207, 72, 62);
 
