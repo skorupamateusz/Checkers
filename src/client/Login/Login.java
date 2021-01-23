@@ -387,7 +387,7 @@ public class Login extends javax.swing.JFrame {
             if(rs.next()){
                 //checkers start
                 ClientApp client = new ClientApp();
-                client.setTitle("Checkers");
+                client.setTitle("Checkers - " + username + "");
                 client.pack();
                 client.setVisible(true);
                 client.setLocation(250, 150);

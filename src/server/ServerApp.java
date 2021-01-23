@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import client.Login.Login;
+import client.Model.Player;
 import server.Constants.CheckersConstants;
 import server.Session.SessionHandler;
 import java.io.*;
@@ -53,7 +54,7 @@ public class ServerApp extends JFrame {
 
                 //Wait for player 1
                 Socket player1 = serverSocket.accept();
-                information.append(new Date() + "  -  "+ Login.username + " joined the Server. \n");
+                information.append(new Date() + "  -  Player1 joined the Server. \n");
                 //information.append(player1.getInetAddress().getHostAddress() + "\n");
 
                 //Notification to player1 that's he's connected successfully
@@ -61,7 +62,7 @@ public class ServerApp extends JFrame {
 
                 //Wait for player 2
                 Socket player2 = serverSocket.accept();
-                information.append(new Date() + "  -  player2 joined the Server. \n");
+                information.append(new Date() + "  -  Player2 joined the Server. \n");
                 //information.append(player2.getInetAddress().getHostAddress() +"\n");
 
                 //Notification to player2 that's he's connected successfully
