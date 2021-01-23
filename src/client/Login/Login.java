@@ -5,6 +5,7 @@
  */
 package client.Login;
 
+import client.ClientApp;
 import java.awt.Color;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,9 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form LoginForm
      */
+    public static String username;
+    public static String password;
+
     public Login() {
         initComponents();
         
@@ -368,8 +372,8 @@ public class Login extends javax.swing.JFrame {
         PreparedStatement st;
         ResultSet rs;
         
-        String username = jTextFieldUsername.getText();
-        String password = String.valueOf(jPasswordField.getPassword());
+        username = jTextFieldUsername.getText();
+        password = String.valueOf(jPasswordField.getPassword());
         
         String query = "SELECT * FROM `users` WHERE `username` = ? AND `password` = ?";
         
@@ -382,6 +386,12 @@ public class Login extends javax.swing.JFrame {
             
             if(rs.next()){
                 //checkers start
+                ClientApp client = new ClientApp();
+                client.setTitle("Checkers");
+                client.pack();
+                client.setVisible(true);
+                client.setLocation(250, 150);
+                client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
                 this.dispose();
                 

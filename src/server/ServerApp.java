@@ -2,6 +2,8 @@ package server;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
+
+import client.Login.Login;
 import server.Constants.CheckersConstants;
 import server.Session.SessionHandler;
 import java.io.*;
@@ -51,7 +53,7 @@ public class ServerApp extends JFrame {
 
                 //Wait for player 1
                 Socket player1 = serverSocket.accept();
-                information.append(new Date() + "  -  player1 joined the Server. \n");
+                information.append(new Date() + "  -  "+ Login.username + " joined the Server. \n");
                 //information.append(player1.getInetAddress().getHostAddress() + "\n");
 
                 //Notification to player1 that's he's connected successfully
