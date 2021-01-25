@@ -29,11 +29,10 @@ public class PropertyManager {
     }
 
     public String getAddress(){
-        return prop.getProperty("server");
+        return prop.getProperty("Server");
     }
 
     public int getPort(){
-        return Integer.parseInt(prop.getProperty("port"));
+        return Integer.parseInt(prop.getProperty("Port"));
     }
-
 }

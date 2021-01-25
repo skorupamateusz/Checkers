@@ -10,6 +10,9 @@ import client.Model.Player;
 import client.Model.Square;
 import client.View.BoardPanel;
 
+/**
+ * Client side game handler.
+ */
 public class Controller implements Runnable {
     private boolean continueToPlay;
     private boolean waitingForAction;
@@ -25,7 +28,6 @@ public class Controller implements Runnable {
     //Data
     private LinkedList<Square> selectedSquares;
     private LinkedList<Square> playableSquares;
-    //private LinkedList<Square> crossableSquares;
 
     public Controller(Player player, DataInputStream input, DataOutputStream output){
         this.player = player;
@@ -48,9 +50,7 @@ public class Controller implements Runnable {
 
         try {
             toServer.writeUTF(player.getName());
-            //Player One
             if(player.getPlayerID()==Checkers.PLAYER_ONE.getValue()){
-                //wait for the notification to start
                 fromServer.readInt();
                 player.setMyTurn(true);
             }
@@ -84,7 +84,7 @@ public class Controller implements Runnable {
             e.printStackTrace();
         }
     }
-//todo zrobić tu funkcje wyświetlania panelu po zakeńczeniu gry
+
     private void receiveInfoFromServer() throws Exception {
         player.setMyTurn(false);
         int from = fromServer.readInt();
@@ -130,13 +130,15 @@ public class Controller implements Runnable {
         }
     }
 
-    //When a square is selected
+    /**
+     * Check possible move on selected square.
+     * @param s Square
+     */
     public void squareSelected(Square s) {
 
         if(selectedSquares.isEmpty()){
             addToSelected(s);
         }
-        //if one is already selected, check if it is possible move
         else if(selectedSquares.size()>=1){
             if(playableSquares.contains(s)){
                 move(selectedSquares.getFirst(),s);

@@ -1,12 +1,10 @@
 package client.Handler;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JOptionPane;
-import javax.swing.border.Border;
 import client.Model.Square;
 import client.View.SquarePanel;
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Mouse extends MouseAdapter {
 
@@ -21,19 +19,16 @@ public class Mouse extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
 
-
         try{
             if(controller.isHisTurn()){
                 ToggleSelectPiece(e);
             }else{
-                JOptionPane.showMessageDialog(null, "Not your turn",
-                        "Error", JOptionPane.ERROR_MESSAGE, null);
+                JOptionPane.showMessageDialog(null, "Not your turn.",
+                        "Error occurred.", JOptionPane.ERROR_MESSAGE, null);
             }
         }catch(Exception ex){
-            System.out.println("Error");
+            System.out.println("Error occurred.");
         }
-
-
     }
 
     private void ToggleSelectPiece(MouseEvent e){
@@ -41,18 +36,16 @@ public class Mouse extends MouseAdapter {
             squarePanel = (SquarePanel) e.getSource();
             Square s = squarePanel.getSquare();
 
-            //if square is already selected - deselect
             if(s.isSelected()){
-                System.out.println("deselect - "+s.getSquareID());
+                System.out.println("Deselect - "+s.getSquareID());
                 controller.squareDeselected();
             }
-            //else select
             else{
-                System.out.println("select - "+s.getSquareID());
+                System.out.println("Select - "+s.getSquareID());
                 controller.squareSelected(s);
             }
         }catch(Exception ex){
-            System.out.println("error");
+            System.out.println("Error occurred.");
         }
     }
 }

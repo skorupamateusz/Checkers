@@ -10,8 +10,6 @@ public class Board {
     private boolean filled;
     private int playerID;
 
-
-    //Constructor
     public Board(int SquareID, int SquareRow, int SquareCol, boolean isFilled){
         this.SquareID=SquareID;
         this.SquareRow=SquareRow;

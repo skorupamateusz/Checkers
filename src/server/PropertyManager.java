@@ -29,7 +29,7 @@ public class PropertyManager {
     }
 
     public int getPort(){
-        return Integer.parseInt(prop.getProperty("port"));
+        return Integer.parseInt(prop.getProperty("Port"));
     }
 
 }

@@ -3,7 +3,6 @@ package client.Constants;
 public enum SessionVariable{
 
     myID(3);
-    //public static Mouse mouseListener = new Mouse();
 
     private int value;
 

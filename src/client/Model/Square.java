@@ -13,7 +13,6 @@ public class Square {
     private boolean isPossibleToMove;
     private int playerID;
 
-    //Constructor
     public Square(int SquareID, int SquareRow, int SquareCol, boolean isFilled){
         this.SquareID=SquareID;
         this.SquareRow=SquareRow;

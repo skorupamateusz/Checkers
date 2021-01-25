@@ -2,19 +2,19 @@ package client.Constants;
 
 import java.awt.Color;
 
+/**
+ * Setting board and pawns colors.
+ */
 public enum Colors {
-    BLACK(Color.BLACK),
+    BLACK(new Color(38, 38, 36)),
     WHITE(Color.WHITE),
-    RED(Color.RED),
-    ORANGE(new Color(255,144,0)),
-    PURPLE(new Color(128,100,162)),
-    YELLOW(Color.YELLOW);
+    RED(new Color(110, 52, 4)),
+    PURPLE(new Color(145, 67, 3)),
+    ORANGE(new Color(255, 255, 240)),
+    YELLOW(new Color(230, 230, 218));
 
-
-    //properties
     private Color color;
 
-    //Constructor
     Colors(Color color){
         this.color = color;
     }
@@ -30,7 +30,6 @@ public enum Colors {
         else if(ID==2){
             return ORANGE.getColor();
         }
-
         return null;
     }
 

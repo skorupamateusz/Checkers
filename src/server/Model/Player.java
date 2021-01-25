@@ -20,19 +20,18 @@ public class Player{
             toPlayer = new DataOutputStream(socket.getOutputStream());
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
     public int sendData(int data){
         try {
             this.toPlayer.writeInt(data);
-            return 1; //Successfull
+            return 1;
         } catch (IOException e) {
             System.out.println("sending: Player not found");
-            //e.printStackTrace();
-            return 99;	//failure
+            e.printStackTrace();
+            return 99;
         }
     }
 
@@ -62,7 +61,6 @@ public class Player{
         try {
             this.socket.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

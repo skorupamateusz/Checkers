@@ -33,7 +33,7 @@ public class BoardPanel extends JPanel {
 
         initializeSquarePanels();
 
-        System.out.println(boardModel.getTotlaSquares());
+        System.out.println(boardModel.getTotalSquares());
     }
 
     private void initializeSquarePanels() {
@@ -51,7 +51,7 @@ public class BoardPanel extends JPanel {
 
     public void repaintPanels(){
         for(SquarePanel panel : panels){
-            panel.setListner(listener);
+            panel.setListener(listener);
         }
 
         repaint();
