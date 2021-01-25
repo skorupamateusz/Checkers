@@ -19,7 +19,7 @@ public class Ranking extends JFrame {
 
         mainPanel.setBackground(kolor);
         label = new JLabel();
-        label.setText("RANKING GRACZY");
+        label.setText("PLAYER RANKING");
         label.setFont(new Font("Arial", Font.BOLD, 30));
 
         JPanel jp = new JPanel();
@@ -29,9 +29,9 @@ public class Ranking extends JFrame {
         db = new ConnectDB();
 
         columns = new Vector<>();
-        columns.addElement("Miejsce");
-        columns.addElement("Nazwa użytkownika");
-        columns.addElement("Punkty");
+        columns.addElement("Rank");
+        columns.addElement("Username");
+        columns.addElement("Points");
         try {
             table = new JTable(db.fill(), columns);
             table.setGridColor(Color.gray );

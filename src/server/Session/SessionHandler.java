@@ -1,16 +1,13 @@
 package server.Session;
 
-import javax.swing.*;
-import java.io.*;
-import java.net.*;
-import java.awt.*;
+import client.Login.ConnectDB;
+import server.Model.Board;
+import server.Model.Game;
+import server.Model.Player;
+
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import client.Login.ConnectDB;
-import server.Constants.CheckersConstants;
-import server.Model.*;
 
 public class SessionHandler implements Runnable {
 
@@ -20,14 +17,16 @@ public class SessionHandler implements Runnable {
 
     private boolean continueToPlay = true;
 
-    //Construct thread
     public SessionHandler(Socket p1, Socket p2){
         player1 = new Player(server.Constants.CheckersConstants.PLAYER_ONE.getValue(), p1);
         player2 = new Player(server.Constants.CheckersConstants.PLAYER_TWO.getValue(), p2);
 
         CheckersConstants = new Game();
     }
-
+    /**
+     * Update score after the game has ended.
+     * @param username
+     */
     public void newResult(String username){
         try{
             PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM USERS WHERE USERNAME =?");
@@ -48,29 +47,27 @@ public class SessionHandler implements Runnable {
     }
 
     public void run() {
-        //Send Data back and forth
         try{
-            //notify Player 1 to start
             player1.sendData(1);
 
             String pName = player1.receiveDataString();
             String pName2 = player2.receiveDataString();
 
             while(continueToPlay){
-                //wait for player 1's Action
+                //Wait for Player 1 action
                 int from = player1.receiveData();
                 int to = player1.receiveData();
                 checkStatus(from, to);
                 updateGameModel(from, to);
 
-                //Send Data back to 2nd Player
+                //Send data back to Player 2
                 if(CheckersConstants.isOver())
-                    player2.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());	//Game Over notification
+                    player2.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());
                 int fromStatus = player2.sendData(from);
                 int toStatus = player2.sendData(to);
                 checkStatus(fromStatus,toStatus);
 
-                //IF game is over, break
+                //Break if game is over
                 if(CheckersConstants.isOver()){
                     player1.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
                     continueToPlay=false;
@@ -79,16 +76,15 @@ public class SessionHandler implements Runnable {
 
                 System.out.println("Player 1 has moved.");
 
-                //wait for player 2's Action
+                //Wait for Player 2 action
                 from = player2.receiveData();
                 to = player2.receiveData();
                 checkStatus(from, to);
                 updateGameModel(from, to);
-                //todo tu jest zakończenie gry dla obu graczy
-                //Send Data back to 1st Player
+                //Send data back to Player 1
 
                 if(CheckersConstants.isOver()){
-                    player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
+                    player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());
                 }
 
                 fromStatus = player1.sendData(from);
@@ -103,13 +99,11 @@ public class SessionHandler implements Runnable {
                     continueToPlay=false;
                     break;
                 }
-
                 System.out.println("Player 2 has moved.");
             }
 
             try {
                 if (CheckersConstants.isOverPlayer()) {
-                    //player2.sendData(server.Constants.CheckersConstants.YOU_WIN.getValue());
                     newResult(pName2);
                     System.out.println("Winner: " + pName2 + ".");
 
@@ -117,7 +111,6 @@ public class SessionHandler implements Runnable {
             }
             catch(Game.myException e)
             {
-                //player1.sendData(server.Constants.CheckersConstants.YOU_LOSE.getValue());		//Game Over notification
                 newResult(pName);
                 System.out.println("Winner: " + pName + ".");
             }

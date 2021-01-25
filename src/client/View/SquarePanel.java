@@ -18,13 +18,11 @@ public class SquarePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private Square square;
-    private Border defaultBorder = BorderFactory.createEtchedBorder(WHEN_FOCUSED, Color.black, Color.gray);
-    //private Border focusedBorder = BorderFactory.createEtchedBorder(WHEN_FOCUSED, Color.white, Color.gray);
+    private Border defaultBorder = BorderFactory.createEtchedBorder(WHEN_FOCUSED, Color.BLACK, Color.gray);
     private Border thickBorder = BorderFactory.createLineBorder(Colors.PURPLE.getColor(),5);
     private boolean focused;
     private MouseHandler handler;
 
-    //Constructor
     public SquarePanel(Square s){
         this.square = s;
         this.focused = false;
@@ -37,29 +35,27 @@ public class SquarePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponents(g2);
 
-        //Fill black color
         g2.setColor(Colors.BLACK.getColor());
         if(square.getIsFilled()){
             g2.fillRect(0, 0, getWidth(), getHeight());
         }
 
-        //fill piece color
-        int squareplayerID = square.getPlayerID();
+        int squarePlayerID = square.getPlayerID();
         if(isClicked()){
-            g2.setColor(Colors.getFocusedColor(squareplayerID));
+            g2.setColor(Colors.getFocusedColor(squarePlayerID));
             paint(g2);
         }else{
-            if(squareplayerID==1 || squareplayerID == 2){
+            if(squarePlayerID==1 || squarePlayerID == 2){
                 if(focused){
-                    g2.setColor(Colors.getFocusedColor(squareplayerID));
+                    g2.setColor(Colors.getFocusedColor(squarePlayerID));
                 }else{
-                    g2.setColor(Colors.getMyDefaultColor(squareplayerID));
+                    g2.setColor(Colors.getMyDefaultColor(squarePlayerID));
                 }
                 paint(g2);
             }
         }
 
-        //Hover effect for possible move
+        //Hover effect
         if(square.isPossibleToMove()){
             if(focused){
                 setBorder(thickBorder);
@@ -87,36 +83,23 @@ public class SquarePanel extends JPanel {
         }
     }
 
-    public void setListner(Mouse MyListner){
+    public void setListener(Mouse MyListener){
         setListener();
         if(square.isPossibleToMove() || square.getPlayerID()==SessionVariable.myID.getValue()){
-            this.removeMouseListener(MyListner);
-            this.addMouseListener(MyListner);
+            this.removeMouseListener(MyListener);
+            this.addMouseListener(MyListener);
         }else{
-            this.removeMouseListener(MyListner);
+            this.removeMouseListener(MyListener);
         }
     }
 
-    //return Square
     public Square getSquare(){
         return this.square;
     }
 
-    //return clicked
     public boolean isClicked(){
         return this.square.isSelected();
     }
-
-    //reset clicked to false
-    public void resetClicked(){
-        this.square.setSelected(false);
-    }
-
-    //reset clicked to true
-    public void setClicked(){
-        this.square.setSelected(true);
-    }
-
 
     private void paint(Graphics2D g2){
         int padding= 24;
@@ -124,7 +107,7 @@ public class SquarePanel extends JPanel {
     }
 
     /**
-     * My Mouse Listener
+     * Mouse Listener.
      */
     class MouseHandler extends MouseAdapter {
 
@@ -141,17 +124,6 @@ public class SquarePanel extends JPanel {
         }
 
         public void mousePressed(MouseEvent e) {
-			/*
-			if(isClicked()){
-				System.out.println("deselect - "+square.getSquareID());
-				resetClicked();
-				repaint();
-			}
-			else if(square.getPlayerID()==SessionVariable.myID.getValue()){
-				System.out.println("select - "+square.getSquareID());
-				setClicked();
-				repaint();
-			}*/
         }
     }
 }

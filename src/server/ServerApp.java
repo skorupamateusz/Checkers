@@ -33,14 +33,13 @@ public class ServerApp extends JFrame {
         add(scroll, BorderLayout.CENTER);
     }
 
-    //Establish connection and wait for Clients
+    //Establish connection and wait for players
     public void startRunning(){
 
         try{
             PropertyManager pm = PropertyManager.getInstance();
             int port = pm.getPort();
 
-            //Create a server socket
             serverSocket = new ServerSocket(port);
             information.append(new Date() + "  -  Checkers Server started. \n\n");
             sessionNo = 1;
@@ -49,26 +48,21 @@ public class ServerApp extends JFrame {
 
                 information.append(new Date()+ "  -  Session "+ sessionNo + " is started.\n");
 
-                //Wait for player 1
+                //Wait for Player 1
                 Socket player1 = serverSocket.accept();
                 information.append(new Date() + "  -  Player1 joined the Server. \n");
-                //information.append(player1.getInetAddress().getHostAddress() + "\n");
 
-                //Notification to player1 that's he's connected successfully
                 new DataOutputStream(player1.getOutputStream()).writeInt(CheckersConstants.PLAYER_ONE.getValue());
 
                 //Wait for player 2
                 Socket player2 = serverSocket.accept();
                 information.append(new Date() + "  -  Player2 joined the Server. \n");
-                //information.append(player2.getInetAddress().getHostAddress() +"\n");
 
-                //Notification to player2 that's he's connected successfully
                 new DataOutputStream(player2.getOutputStream()).writeInt(CheckersConstants.PLAYER_TWO.getValue());
 
-                //Increase Session number
+                //Increase session
                 sessionNo++;
 
-                // Create a new thread for this session of two players
                 SessionHandler task = new SessionHandler(player1, player2);
                 new Thread(task).start();
             }

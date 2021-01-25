@@ -1,8 +1,6 @@
 package client.Login;
 
-
 import com.mysql.cj.jdbc.MysqlDataSource;
-
 import java.sql.*;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -29,102 +27,43 @@ public class ConnectDB {
         }
     }
     public static Connection getConnection(){
-
         Connection cnx = null;
-
-        MysqlDataSource datasrc = new MysqlDataSource();
-
-        datasrc.setServerName(serwer);
-        datasrc.setUser(username);
-        datasrc.setPassword(password);
-        datasrc.setDatabaseName(dbname);
-        datasrc.setPortNumber(port);
+        MysqlDataSource dataSrc = new MysqlDataSource();
+        dataSrc.setServerName(serwer);
+        dataSrc.setUser(username);
+        dataSrc.setPassword(password);
+        dataSrc.setDatabaseName(dbname);
+        dataSrc.setPortNumber(port);
 
         try {
-            cnx = datasrc.getConnection();
+            cnx = dataSrc.getConnection();
         }catch (SQLException ex) {
             Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return cnx;
-
-    }
-    /**
-     * @param username
-     * @param password
-     * @return resultset mozna przepisac na obiekt i przekazyac obiekt zalogowanrgo graza miedzy widokami
-     * @throws SQLException
-     */
-    public ResultSet addUser(String username, String password)throws SQLException{
-
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO USERS (username, password) VALUES (?, ?)");
-        stm.setString(1, username);
-        stm.setString(2, password);
-        stm.executeUpdate();
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE username = ? AND password = ?");
-        ps.setString(1 , username);
-        ps.setString(2, password);
-
-        ResultSet rs = ps.executeQuery();
-        return rs;
     }
 
     /**
-     *
-     * @param username nazwa użytkownika do sprawdzenia czy jest  w bazie danych
-     * @return true jezeli jest już zajęta false gdy wolna
-     * @throws SQLException
-     */
-    public boolean checkUsername(String username)throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE username =? ");
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()){
-            return true;
-        }
-        else return false;
-    }
-
-    /**
-     * //todo dodac przekaznie jako argument gracza by uzyskać jego pozycję w rankigu
-     * sprawdzac czy wartosc username albo id jedt niemu równa i dla iteracji
-     * oznaczajecej pozycje w rankingu przekazac ja na zewnatrz
-     * @return vector z rankigiem z bd który jest wymaganym parametrem do przekazania w JTabel
+     * @return Required ranking vector from database to fill JTabel.
      * @throws SQLException
      */
     public Vector<Vector> fill() throws SQLException{
-        String statemnt = "SELECT * FROM USERS ORDER BY points DESC";
+        String statement = "SELECT * FROM USERS ORDER BY points DESC";
         Statement query = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
 
         Vector<Vector> data = new Vector<>();
-        ResultSet rs = query.executeQuery(statemnt);
+        ResultSet rs = query.executeQuery(statement);
         int i =1;
         while ((rs.next())){
-            Vector<String> tablecontent = new Vector<>();
-            tablecontent.addElement(String.valueOf(i));
-            tablecontent.addElement(rs.getString(2));
-            tablecontent.addElement(rs.getString(4));
-            data.addElement(tablecontent);
+            Vector<String> tableContent = new Vector<>();
+            tableContent.addElement(String.valueOf(i));
+            tableContent.addElement(rs.getString(2));
+            tableContent.addElement(rs.getString(4));
+            data.addElement(tableContent);
             i++;
         }
         rs.close();
         return data;
     }
-
-    /**
-     * metoda aktualizauje wynik punktowy po wygraniu rozgrywki przez gracza
-     * @param id id gracza dla którego zmienia sie wysnik
-     * @param currentRes aktualy wybnik dla zalgowanego gracza znany z prsekazywanego miedzy widoki ResultSet
-     * @throws Exception
-     */
-    public void newResult(int id, int currentRes)throws Exception{
-        int restosave = currentRes+1;
-        PreparedStatement stm = connection.prepareStatement("UPDATE users SET points = ? where id = ?");
-        stm.setInt(1, restosave);
-        stm.setInt(2, id);
-        stm.executeUpdate();
-
-    }
-
 }
