@@ -319,7 +319,7 @@ public class Login extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Invalid username / password", "Login unsuccessfull", 2);
+                JOptionPane.showMessageDialog(null, "Invalid username / password", "Login failed", 2);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
