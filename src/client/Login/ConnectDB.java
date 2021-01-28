@@ -10,7 +10,7 @@ public class ConnectDB {
     private Connection connection;
     private final String driverName = "com.mysql.cj.jdbc.Driver";
     private final String url = "jdbc:mysql://localhost:3306/checkers?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private static String serwer = "localhost";
+    private static String server = "localhost";
     private static String username = "root";
     private static String dbname = "checkers";
     private static Integer port = 3306;
@@ -27,20 +27,20 @@ public class ConnectDB {
         }
     }
     public static Connection getConnection(){
-        Connection cnx = null;
+        Connection conn = null;
         MysqlDataSource dataSrc = new MysqlDataSource();
-        dataSrc.setServerName(serwer);
+        dataSrc.setServerName(server);
         dataSrc.setUser(username);
         dataSrc.setPassword(password);
         dataSrc.setDatabaseName(dbname);
         dataSrc.setPortNumber(port);
 
         try {
-            cnx = dataSrc.getConnection();
+            conn = dataSrc.getConnection();
         }catch (SQLException ex) {
             Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return cnx;
+        return conn;
     }
 
     /**
