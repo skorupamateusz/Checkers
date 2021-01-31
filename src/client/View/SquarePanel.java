@@ -68,7 +68,8 @@ public class SquarePanel extends JPanel {
 
         //King
         if(square.isKing() && square.getIsFilled()){
-            g2.setColor(Color.WHITE);
+            //g2.setColor(Color.WHITE);
+            g2.setColor(Color.BLUE);
             g2.setFont(new Font("Arial",Font.BOLD,25));
             g2.drawString("K", getWidth()/2-8, getHeight()/2+8);
         }
