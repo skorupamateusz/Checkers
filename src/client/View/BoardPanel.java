@@ -1,11 +1,9 @@
 package client.View;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.LinkedList;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.*;
 import client.Model.Board;
 import client.Model.Square;
@@ -53,7 +51,6 @@ public class BoardPanel extends JPanel {
         for(SquarePanel panel : panels){
             panel.setListener(listener);
         }
-
         repaint();
     }
 
