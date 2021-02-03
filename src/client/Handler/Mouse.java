@@ -21,7 +21,7 @@ public class Mouse extends MouseAdapter {
 
         try{
             if(controller.isHisTurn()){
-                ToggleSelectPiece(e);
+                toggleSelectPiece(e);
             }else{
                 JOptionPane.showMessageDialog(null, "Not your turn.",
                         "Error occurred.", JOptionPane.ERROR_MESSAGE, null);
@@ -31,7 +31,7 @@ public class Mouse extends MouseAdapter {
         }
     }
 
-    private void ToggleSelectPiece(MouseEvent e){
+    private void toggleSelectPiece(MouseEvent e){
         try{
             squarePanel = (SquarePanel) e.getSource();
             Square s = squarePanel.getSquare();

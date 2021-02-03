@@ -36,7 +36,7 @@ public class Player{
     }
 
     public int receiveData(){
-        int data = 0;;
+        int data = 0;
         try{
             data = this.fromPlayer.readInt();
             return data;
