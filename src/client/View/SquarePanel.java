@@ -15,10 +15,7 @@ import client.Handler.*;
 
 public class SquarePanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-
     private Square square;
-    private Border defaultBorder = BorderFactory.createEtchedBorder(WHEN_FOCUSED, Color.BLACK, Color.gray);
     private Border thickBorder = BorderFactory.createLineBorder(Colors.PURPLE.getColor(),5);
     private boolean focused;
     private MouseHandler handler;
