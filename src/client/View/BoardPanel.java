@@ -12,8 +12,6 @@ import client.Handler.*;
 
 public class BoardPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-
     private Dimension panelSize = new Dimension(720,720);
     private Board boardModel;
     private Mouse listener;

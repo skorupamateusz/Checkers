@@ -10,8 +10,6 @@ import java.util.Date;
 
 public class ServerApp extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-
     //Frame components
     private JScrollPane scroll;
     private JTextArea information;

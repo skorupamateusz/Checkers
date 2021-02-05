@@ -11,7 +11,6 @@ public class Server {
         server.setVisible(true);
         server.setTitle("Checkers Server");
         server.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         server.startRunning();
     }
 }

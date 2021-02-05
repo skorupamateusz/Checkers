@@ -15,8 +15,6 @@ import java.net.UnknownHostException;
 
 public class ClientApp extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-
     private String address;
     private int port;
     private Player player;
